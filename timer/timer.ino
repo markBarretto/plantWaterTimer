@@ -1,22 +1,24 @@
-const int lightPin = 13;
+const int misterPin = 4;
+const int fanPin = 5;
 
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
-  pinMode(lightPin, OUTPUT);
+  pinMode(misterPin, OUTPUT);
+  pinMode(fanPin, OUTPUT);
   Serial.begin(9600);
 }
 
 void switchOn(int pin) {
-  return digitalWrite(lightPin, HIGH);
+  return digitalWrite(pin, HIGH);
 }
 
 void switchOff(int pin) {
-  return digitalWrite(lightPin, LOW);
+  return digitalWrite(pin, LOW);
 }
 
-void togglePin(int pin) {
-  checkAtInterval(1000, switchOn, pin); // turn on after 1 sec
-  checkAtInterval(2000, switchOff, pin); // turn off after 2 secs
+void togglePin(int pin, int durationOn, int durationOff) {
+  checkAtInterval(durationOff, switchOn, pin); // turn on after 1 sec
+  checkAtInterval(durationOn, switchOff, pin); // turn off after 2 secs
 }
 
 void checkAtInterval(int timeInterval, void (&callMethod)(int), int pin) {
@@ -32,5 +34,6 @@ void checkAtInterval(int timeInterval, void (&callMethod)(int), int pin) {
 
 // the loop function runs over and over again forever
 void loop() {
-  togglePin(13);
+  togglePin(misterPin, 1000, 2000);
+  togglePin(fanPin, 2000, 1000);
 }
